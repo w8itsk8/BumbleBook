@@ -1,0 +1,45 @@
+<resources>
+    <!-- Login Screen Strings -->
+    <string name="app_name">CS 360 Final</string>
+    <string name="brand">Bumble Book</string>
+    <string name="logo_desc">black honeycomb logo with the words "Bumble Book" on a solid yellow background</string>
+    <string name="username_label_text">Username:</string>
+    <string name="username_hint">enter username here</string>
+    <string name="password_label_text">Password:</string>
+    <string name="password_hint">enter username here</string>
+    <string name="login_label">Log In</string>
+    <string name="create_label">New User</string>
+
+    <!-- Home Screen Strings -->
+    <string name="home_header_label">Collections</string>
+    <string name="colLabel_title1">Primary Book Title:</string>
+    <string name="colLabel_title2">Subtitle:</string>
+    <string name="colLabel_title3">Descriptive Title:</string>
+    <string name="colLabel_edition">Edition Title:</string>
+    <string name="colLabel_printYear">Printing Year:</string>
+    <string name="colLabel_publisher">Publisher:</string>
+    <string name="colLabel_author">Author(s):</string>
+    <string name="colLabel_editor">Editor(s):</string>
+    <string name="colLabel_genre">Genre(s):</string>
+    <string name="colLabel_quantity">Quantity:</string>
+    <string name="button1_add">Add Book</string>
+    <string name="button2_edit">Edit Book</string>
+    <string name="button3_delete">Delete Book</string>
+
+    <!-- Add/Edit Screen Strings -->
+    <string name="close_button_label">X</string>
+    <string name="addEdit_header_label">Add/Edit Book</string>
+    <string name="addEdit_requiredNote_label">* Denotes Required Elements</string>
+    <string name="fieldLabel_title1">*Primary Book Title:</string>
+    <string name="fieldLabel_title2">Subtitle:</string>
+    <string name="fieldLabel_title3">Additional Title Text:</string>
+    <string name="fieldLabel_edition">Edition Title:</string>
+    <string name="fieldLabel_printYear">*Printing Year:</string>
+    <string name="fieldLabel_publisher">*Publisher:</string>
+    <string name="fieldLabel_author">Author(s):</string>
+    <string name="fieldLabel_editor">Editor(s):</string>
+    <string name="fieldLabel_genre">*Genre(s):</string>
+    <string name="fieldLabel_quantity">*Quantity:</string>
+    <string name="saveButton_label">Save Book</string>
+
+</resources>

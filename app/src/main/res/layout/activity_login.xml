@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- created by Kate Wheeler 20 Sept 2026 -->
+<!-- BumbleBook Book Inventory Application -->
+<!-- activity_login defines login screen layout -->
+
+
+<!-- Initialize table layout -->
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+    android:background="#FFD966">
+
+    <!-- New table row for app logo -->
+    <TableRow>
+
+        <!-- ImageView to display logo -->
+        <ImageView
+            android:layout_span="7"
+            android:layout_height="300dp"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal|top"
+            android:contentDescription="@string/logo_desc"
+            android:scaleType="centerInside">
+        </ImageView>
+
+    </TableRow>
+
+    <!-- Table row for the username label -->
+    <TableRow>
+
+        <!-- TextView displaying username label -->
+        <TextView
+            android:layout_span="7"
+            android:text="@string/username_label_text"
+            android:textSize="25sp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:textColor="#000000" >
+        </TextView>
+
+    </TableRow>
+
+    <!-- Table row for username text-entry field -->
+    <TableRow>
+
+        <!-- EditText so user can enter their username -->
+        <EditText
+            android:id="@+id/et1"
+            android:layout_span="7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            android:autofillHints="Enter Your Username Here"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:labelFor="@id/et1">
+        </EditText>
+
+    </TableRow>
+
+    <!-- Table row for password text-entry field -->
+    <TableRow>
+
+        <!-- TextView displaying password label -->
+        <TextView
+            android:layout_span="7"
+            android:text="@string/password_label_text"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:textColor="#000000">
+        </TextView>
+
+    </TableRow>
+
+    <!-- Table row for password text-entry field -->
+    <TableRow>
+
+        <!-- EditText for user to enter their password -->
+        <EditText
+            android:id="@+id/et2"
+            android:layout_span="7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            android:autofillHints="Enter Your Password Here"
+            android:background="#FFFFFF"
+            android:inputType="textPassword"
+            android:labelFor="@+id/et2" >
+        </EditText>
+
+    </TableRow>
+
+    <!-- Table row for buttons -->
+    <TableRow style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <!-- Button for authentication of credentials -->
+        <Button
+            android:id="@+id/button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:text="@string/login_label"
+            android:layout_marginStart="75dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="#000000"
+            android:textColor="#FFFFFF">
+        </Button>
+
+        <!-- Button to create new log-in credentials -->
+        <Button
+            android:id="@+id/button2"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:text="@string/create_label"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="75dp"
+            android:backgroundTint="#000000"
+            android:textColor="#FFFFFF">
+        </Button>
+
+    </TableRow>
+
+</TableLayout>

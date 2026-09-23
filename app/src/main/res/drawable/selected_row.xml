@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- created by Kate Wheeler 21 Sept 2026 -->
+<!-- BumbleBook Book Inventory Application -->
+<!-- selected_row defines home screen layout -->
+
+<!-- Initialize shape -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Define outline specifics -->
+    <stroke
+        android:width="3dp"
+        android:color="#000000" />
+
+</shape>

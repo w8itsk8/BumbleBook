@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- created by Kate Wheeler 21 Sept 2026 -->
+<!-- BumbleBook Book Inventory Application -->
+<!-- activity_addedit defines add/edit screen layout -->
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFD966">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- X in screen corner to return to home -->
+        <TextView
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/close_button_label"
+            android:textSize="24sp"
+            android:padding="8dp" />
+
+        <!-- Activity heading -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addEdit_header_label"
+            android:textSize="36sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Note regarding required fields -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addEdit_requiredNote_label"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Primary Book Title text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_title1"
+            android:textSize="20sp" />
+
+        <!-- Primary Book Title text field -->
+        <EditText
+            android:id="@+id/editTitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Subtitle text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_title2"
+            android:textSize="20sp" />
+
+        <!-- Subtitle text field -->
+        <EditText
+            android:id="@+id/editTitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Tertiary Book Title text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_title3"
+            android:textSize="20sp" />
+
+        <!-- Tertiary Book Title text field -->
+        <EditText
+            android:id="@+id/editTitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Edition Title text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_edition"
+            android:textSize="20sp" />
+
+        <!-- Edition text field -->
+        <EditText
+            android:id="@+id/editEdition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Print Year text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_printYear"
+            android:textSize="20sp" />
+
+        <!-- Print Year text field -->
+        <EditText
+            android:id="@+id/editPrintYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Publisher text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_publisher"
+            android:textSize="20sp" />
+
+        <!-- Publisher text field -->
+        <EditText
+            android:id="@+id/editPublisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Author text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_author"
+            android:textSize="20sp" />
+
+        <!-- Author text field -->
+        <EditText
+            android:id="@+id/editAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Editor text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_editor"
+            android:textSize="20sp" />
+
+        <!-- Editor text field -->
+        <EditText
+            android:id="@+id/editEditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Genre text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_genre"
+            android:textSize="20sp" />
+
+        <!-- Genre text field -->
+        <EditText
+            android:id="@+id/editGenre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Label for Quantity text field (required) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fieldLabel_quantity"
+            android:textSize="20sp" />
+
+        <!-- Quantity text field -->
+        <EditText
+            android:id="@+id/editQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:inputType="number"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Save button -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/saveButton_label"
+            android:backgroundTint="#000000"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</ScrollView>
