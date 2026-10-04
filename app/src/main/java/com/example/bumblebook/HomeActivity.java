@@ -195,10 +195,11 @@ public class HomeActivity extends AppCompatActivity {
         // Define row in table
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
+        int bookId = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
 
         // Create new book from cursor data
         Book book = new Book(
-                cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
+                bookId,
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_TITLE1)),
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_TITLE2)),
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_TITLE3)),
@@ -207,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PUBLISHER)),
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_AUTHOR)),
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_EDITOR)),
-                cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_GENRE)),
+                db.getGenresForBook(bookId),
                 cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_QUANTITY))
         );
 
@@ -220,7 +221,7 @@ public class HomeActivity extends AppCompatActivity {
         row.addView(newCell(book.getPublisher(), WIDTH_PUBLISHER));
         row.addView(newCell(book.getAuthor(), WIDTH_AUTHOR));
         row.addView(newCell(book.getEditor(), WIDTH_EDITOR));
-        row.addView(newCell(book.getGenre(), WIDTH_GENRE));
+        row.addView(newCell(String.join(", ", book.getGenres()), WIDTH_GENRE));
         row.addView(newCell(String.valueOf(book.getQuantity()), WIDTH_QUANTITY));
 
         // Listen for tap of row

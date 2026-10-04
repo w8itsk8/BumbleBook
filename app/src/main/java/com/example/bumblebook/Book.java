@@ -3,6 +3,8 @@ package com.example.bumblebook;
 // BumbleBook Book Inventory Application
 // Book defines book object
 
+import java.util.List;
+
 // initiate class
 public class Book {
 
@@ -16,13 +18,13 @@ public class Book {
     private String publisher;
     private String author;
     private String editor;
-    private String genre;
+    private List<String> genres;
     private int quantity;
 
     // Constructor
     public Book(int id, String title1, String title2, String title3, String edition,
                 int printYear, String publisher, String author, String editor,
-                String genre, int quantity) {
+                List<String> genre, int quantity) {
 
         this.id = id;
         this.title1 = title1;
@@ -33,7 +35,7 @@ public class Book {
         this.publisher = publisher;
         this.author = author;
         this.editor = editor;
-        this.genre = genre;
+        this.genres = genre;
         this.quantity = quantity;
 
     }
@@ -109,11 +111,11 @@ public class Book {
 
     }
 
-    // Genre getter
-    public String getGenre() {
+    // Genres getter
+    public List<String> getGenres() {
 
         // Return genre(s) of specified book
-        return genre;
+        return genres;
 
     }
 

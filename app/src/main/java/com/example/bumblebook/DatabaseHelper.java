@@ -12,16 +12,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.content.ContentValues;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // initiate class
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Initialize class-level variables
     private static final String DATABASE_NAME = "inventoryapp.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Table names
     public static final String TABLE_BOOKS = "book_data";
     public static final String TABLE_LOGIN = "user_login_data";
+    public static final String TABLE_GENRES = "genres";
 
     // Column titles for user information database
     public static final String COL_USERNAME = "username";
@@ -38,6 +42,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_EDITOR = "editor";
     public static final String COL_GENRE = "genre";
     public static final String COL_QUANTITY = "quantity";
+
+    // Column titles for genre database
+    public static final String GENRE_ID = "book_id";
+    public static final String GENRE_NAME = "genre_name";
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -81,8 +89,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COL_PUBLISHER + " TEXT NOT NULL, " +
                     COL_AUTHOR + " TEXT, " +
                     COL_EDITOR + " TEXT, " +
-                    COL_GENRE + " TEXT NOT NULL, " +
                     COL_QUANTITY + " INTEGER NOT NULL DEFAULT 1" +
+                    ")");
+
+        } catch (SQLiteException e) {
+
+            // Log error
+            Log.e("DatabaseHelper", "Failed to create table: " + e.getMessage());
+
+        }
+
+        // Catch errors creating Genre table
+        try {
+
+            // Create SQL statement to initialize genre table
+            db.execSQL("CREATE TABLE " + TABLE_GENRES + " (" +
+                    GENRE_ID + " INTEGER NOT NULL, " +
+                    GENRE_NAME + " TEXT NOT NULL, " +
+                    "FOREIGN KEY (" + GENRE_ID + ") REFERENCES " + TABLE_BOOKS + "(_id) ON DELETE CASCADE" +
                     ")");
 
         } catch (SQLiteException e) {
@@ -104,10 +128,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Simon & Schuster Pocket Book of Chess', null, null, null, 1988, 'Simon & Schuster', 'Raymond Keene', null, 'Nonfiction, Guidebook, Chess, Games', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Where''d You Go, Bernadette', null, null, null, 2012, 'Little, Brown and Company', 'Maria Semple', null, 'Fiction, Found, Realistic Fiction', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('All Quiet on the Western Front', null, null, 'Translated from the German by A. W. Wheen', 1928, 'Ballantine Books', 'Erich Maria Remarque', null, 'Fiction, Historical Fiction, War Novel, Foreign Literature, German Language', 1)");
+
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('To Kill a Mockingbird', null, null, null, 2002, 'HarperCollins Perennial Classics', 'Harper Lee', null, 'Fiction, Historical Fiction, Social Justice, Classics', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Hamnet', 'A Novel of the Plague', null, null, 2020, 'Penguin Random House', 'Maggie O''Farrell', null, 'Fiction, Historical Fiction', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('A History of the World in Twelve Shipwrecks', null, null, null, 2024, 'Weidenfeld & Nicolson', 'David Gibbins', null, 'Nonfiction, History, Maritime Disaster', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('David and Goliath', 'Underdogs, Misfits, and the Art of Battling Giants', null, 'With a New Afterword by the Author', 2013, 'Back Bay Books, Little, Brown and Company', 'Malcolm Gladwell', null, 'Nonfiction, History', 1)");
+
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Haunted Lancaster County Pennsylvania', 'Ghosts and Other Strange Occurrences', null, null, 1994, 'Science Press', 'Dorothy Burtz Fiedel', null, 'Nonfiction, Supernatural, Ghost, Local, History', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Guernsey Literary and Potato Peel Pie Society', null, null, null, 2009, 'Dial Press Trade', 'Mary Ann Shaffer and Annie Barrows', null, 'Fiction, Historical Fiction, World War II Novel, Found, Letters', 1)");
         db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Nickel Boys', null, null, null, 2020, 'Anchor Books, Penguin Random House', 'Colson Whitehead', null, 'Fiction, Historical Fiction, Social Justice', 1)");
@@ -118,12 +144,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // Function to run necessaries before onCreate or onUpgrade us called
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
+
+    }
+
     // Function to reset table if change has been made
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GENRES);
         onCreate(db);
 
     }
@@ -255,7 +291,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_PUBLISHER)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_AUTHOR)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COL_EDITOR)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COL_GENRE)),
+                    getGenresForBook(id),
                     cursor.getInt(cursor.getColumnIndexOrThrow(COL_QUANTITY))
             );
 
@@ -280,6 +316,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // Function to retrieve all the genres associated with a particular book
+    public List<String> getGenresForBook(int bookId) {
+
+        List<String> genres = new ArrayList<>();
+        Cursor cursor = null;
+
+        // Catch errors fetching genres
+        try {
+
+            // load database
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            cursor = db.query(
+                    TABLE_GENRES,
+                    new String[]{GENRE_NAME},
+                    GENRE_ID + " = ?",
+                    new String[]{String.valueOf(bookId)},
+                    null,
+                    null,
+                    null
+            );
+
+            while (cursor.moveToNext()) {
+                genres.add(cursor.getString(cursor.getColumnIndexOrThrow(GENRE_NAME)));
+            }
+
+        } catch (SQLiteException e) {
+
+            // Log error
+            Log.e("DatabaseHelper", "Failed to load genres for book " + bookId + ": " + e.getMessage());
+
+        } finally {
+
+            if (cursor != null) {
+
+                cursor.close();
+
+            }
+
+        }
+
+        return genres;
+
+    }
+
     // insert new book into database
     public void insertBook(Book book) {
 
@@ -299,11 +380,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COL_PUBLISHER, book.getPublisher());
             values.put(COL_AUTHOR, book.getAuthor());
             values.put(COL_EDITOR, book.getEditor());
-            values.put(COL_GENRE, book.getGenre());
             values.put(COL_QUANTITY, book.getQuantity());
 
-            // insert object into database
-            db.insert(TABLE_BOOKS, null, values);
+            // insert object into database, capture ID
+            long newBookId = db.insert(TABLE_BOOKS, null, values);
+
+            // Insert a row into genre table for each specified
+            for (String genreName : book.getGenres()) {
+
+                ContentValues genreValues = new ContentValues();
+                genreValues.put(GENRE_ID, newBookId);
+                genreValues.put(GENRE_NAME, genreName);
+
+                db.insert(TABLE_GENRES, null, genreValues);
+
+            }
 
         } catch (SQLiteException e) {
 
@@ -317,11 +408,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // function to update existing book
     public void updateBook(Book book) {
 
+        // load database
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Begin transaction so all methods work or none do
+        db.beginTransaction();
+
         // check for errors in update
         try {
-
-            // load database
-            SQLiteDatabase db = this.getWritableDatabase();
 
             // Create new object and add attributes
             ContentValues values = new ContentValues();
@@ -333,7 +427,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COL_PUBLISHER, book.getPublisher());
             values.put(COL_AUTHOR, book.getAuthor());
             values.put(COL_EDITOR, book.getEditor());
-            values.put(COL_GENRE, book.getGenre());
             values.put(COL_QUANTITY, book.getQuantity());
 
             // update selected object in database
@@ -344,10 +437,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     new String[]{String.valueOf(book.getID())}
             );
 
+            // delete all the genre rows for the book
+            db.delete(
+                    TABLE_GENRES,
+                    GENRE_ID + " = ?",
+                    new String[]{String.valueOf(book.getID())}
+            );
+
+            // re-insert current set of genres
+            for (String genreName : book.getGenres()) {
+
+                ContentValues genreValues = new ContentValues();
+                genreValues.put(GENRE_ID, book.getID());
+                genreValues.put(GENRE_NAME, genreName);
+
+                db.insert(TABLE_GENRES, null, genreValues);
+
+            }
+
+            // Now that the rest succeeded, mark transaction as successful
+            db.setTransactionSuccessful();
+
         } catch (SQLiteException e) {
 
             // Log error in console
             Log.e("DatabaseHelper", "Book update failed. " + e.getMessage());
+
+        } finally {
+
+            // End the transaction regardless of outcome
+            db.endTransaction();
 
         }
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- created by Kate Wheeler 4 Oct 2026 -->
+<!-- BumbleBook Book Inventory Application -->
+<!-- dialog_genre_picker defines layout of genre picker -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFD966">
+
+    <!-- Screen Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pickerFrag_header"
+        android:textSize="28sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/genreListContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+
+    </ScrollView>
+
+    <!-- Confirm button -->
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/pickerFrag_button"
+        android:backgroundTint="#000000"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textAllCaps="false" />
+
+
+</LinearLayout>

@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddEditActivity extends AppCompatActivity {
 
     // value to confirm whether
@@ -35,9 +38,12 @@ public class AddEditActivity extends AppCompatActivity {
     EditText editPublisher;
     EditText editAuthor;
     EditText editEditor;
-    EditText editGenre;
+
+    Button genreButton;
     EditText editQuantity;
     Button saveButton;
+
+    private List<String> currentGenres = new ArrayList<>();
 
     // Create activity
     @Override
@@ -62,7 +68,7 @@ public class AddEditActivity extends AppCompatActivity {
         editPublisher = findViewById(R.id.editPublisher);
         editAuthor = findViewById(R.id.editAuthor);
         editEditor = findViewById(R.id.editEditor);
-        editGenre = findViewById(R.id.editGenre);
+        genreButton = findViewById(R.id.genreButton);
         editQuantity = findViewById(R.id.editQuantity);
         saveButton = findViewById(R.id.saveButton);
 
@@ -79,6 +85,36 @@ public class AddEditActivity extends AppCompatActivity {
 
         // Event listener for save
         saveButton.setOnClickListener(view -> saveBook());
+
+        // Event listener for genre picker
+        genreButton.setOnClickListener(view -> {
+
+            GenrePicker picker = GenrePicker.newInstance(currentGenres);
+
+            picker.setOnGenresSelectedListener(selectedGenres -> {
+
+                currentGenres = selectedGenres;
+                updateGenreButtonText();
+
+            });
+
+            picker.show(getSupportFragmentManager(), "genre_picker");
+
+        });
+
+    }
+
+    private void updateGenreButtonText() {
+
+        if (currentGenres.isEmpty()) {
+
+            genreButton.setText("Select Genres");
+
+        } else {
+
+            genreButton.setText(String.join(", ", currentGenres));
+
+        }
 
     }
 
@@ -109,7 +145,8 @@ public class AddEditActivity extends AppCompatActivity {
         editPublisher.setText(book.getPublisher());
         editAuthor.setText(book.getAuthor());
         editEditor.setText(book.getEditor());
-        editGenre.setText(book.getGenre());
+        currentGenres = book.getGenres();
+        updateGenreButtonText();
         editQuantity.setText(String.valueOf(book.getQuantity()));
 
     }
@@ -126,12 +163,11 @@ public class AddEditActivity extends AppCompatActivity {
         String publisher = editPublisher.getText().toString().trim();
         String author = editAuthor.getText().toString().trim();
         String editor = editEditor.getText().toString().trim();
-        String genre = editGenre.getText().toString().trim();
         String quantityText = editQuantity.getText().toString().trim();
 
         // make sure all the required fields have content
         if (title1.isEmpty() || printYearText.isEmpty() || publisher.isEmpty()
-            || genre.isEmpty() || quantityText.isEmpty()) {
+            || currentGenres.isEmpty() || quantityText.isEmpty()) {
 
             // if one of the required fields is empty,
             // make a pop-up letting the user know something is missing
@@ -143,7 +179,7 @@ public class AddEditActivity extends AppCompatActivity {
         int printYear;
         int quantity;
 
-        // make sure print year and quanity are numerical
+        // make sure print year and quantity are numerical
         try {
 
             // map values of printYear and quantity to integers
@@ -165,7 +201,7 @@ public class AddEditActivity extends AppCompatActivity {
                 isEditMode ? bookId : 0,
                 title1, title2, title3, edition,
                 printYear, publisher, author, editor,
-                genre, quantity
+                currentGenres, quantity
         );
 
         // If we're updating values of an existing book
