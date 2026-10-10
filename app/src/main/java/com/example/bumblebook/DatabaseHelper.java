@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Initialize class-level variables
     private static final String DATABASE_NAME = "inventoryapp.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Table names
     public static final String TABLE_BOOKS = "book_data";
@@ -29,7 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Column titles for user information database
     public static final String COL_USERNAME = "username";
-    public static final String COL_PASSWORD = "password";
+    public static final String COL_PASSWORD_HASH = "password_hash";
+    public static final String COL_SALT = "salt";
 
     // Column titles for book database
     public static final String COL_TITLE1 = "title1";
@@ -65,7 +66,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE " + TABLE_LOGIN + " (" +
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COL_USERNAME + " TEXT NOT NULL UNIQUE, " +
-                    COL_PASSWORD + " TEXT NOT NULL" +
+                    COL_PASSWORD_HASH + " TEXT NOT NULL, " +
+                    COL_SALT + " TEXT NOT NULL" +
                     ")");
 
         } catch (SQLiteException e) {
@@ -116,31 +118,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
 
+        // Create sample accounts
+        insertUser(db, "kate", "pa$$w0rd");
+        insertUser(db, "user", "@Passw0rd");
 
-
-        // Create sample values in log-in data table
-        db.execSQL("INSERT INTO user_login_data (username, password) VALUES ('kate', 'pa$$w0rd')");
-        db.execSQL("INSERT INTO user_login_data (username, password) VALUES ('profdimarzio', 'Snhu123!')");
-        /*
-        // Create sample values in book data table
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Dead Sea Scrolls', 'A New Translation', null, 'Translated and with Commentary', 1996, 'HarperCollins', null, 'Michael Wise, Martin Abegg, Jr., & Edward Cook', 'Classics, Ancient Text, Translation', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Code', 'The Hidden Language of Computer Hardware and Software', null, null, 2023, 'Pearson Education', 'Charles Petzold', null, 'Nonfiction, Computer Science', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Simon & Schuster Pocket Book of Chess', null, null, null, 1988, 'Simon & Schuster', 'Raymond Keene', null, 'Nonfiction, Guidebook, Chess, Games', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Where''d You Go, Bernadette', null, null, null, 2012, 'Little, Brown and Company', 'Maria Semple', null, 'Fiction, Found, Realistic Fiction', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('All Quiet on the Western Front', null, null, 'Translated from the German by A. W. Wheen', 1928, 'Ballantine Books', 'Erich Maria Remarque', null, 'Fiction, Historical Fiction, War Novel, Foreign Literature, German Language', 1)");
-
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('To Kill a Mockingbird', null, null, null, 2002, 'HarperCollins Perennial Classics', 'Harper Lee', null, 'Fiction, Historical Fiction, Social Justice, Classics', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Hamnet', 'A Novel of the Plague', null, null, 2020, 'Penguin Random House', 'Maggie O''Farrell', null, 'Fiction, Historical Fiction', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('A History of the World in Twelve Shipwrecks', null, null, null, 2024, 'Weidenfeld & Nicolson', 'David Gibbins', null, 'Nonfiction, History, Maritime Disaster', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('David and Goliath', 'Underdogs, Misfits, and the Art of Battling Giants', null, 'With a New Afterword by the Author', 2013, 'Back Bay Books, Little, Brown and Company', 'Malcolm Gladwell', null, 'Nonfiction, History', 1)");
-
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Haunted Lancaster County Pennsylvania', 'Ghosts and Other Strange Occurrences', null, null, 1994, 'Science Press', 'Dorothy Burtz Fiedel', null, 'Nonfiction, Supernatural, Ghost, Local, History', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Guernsey Literary and Potato Peel Pie Society', null, null, null, 2009, 'Dial Press Trade', 'Mary Ann Shaffer and Annie Barrows', null, 'Fiction, Historical Fiction, World War II Novel, Found, Letters', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Nickel Boys', null, null, null, 2020, 'Anchor Books, Penguin Random House', 'Colson Whitehead', null, 'Fiction, Historical Fiction, Social Justice', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('Readings from Literature', null, null, null, 1915, 'American Book Company', null, 'Reuben Post Halleck and Elizabeth Graeme Barbour', 'Fiction, Collection, Short Story, Poetry, Anthology', 1)");
-        db.execSQL("INSERT INTO book_data (title1, title2, title3, edition, printYear, publisher, author, editor, genre, quantity) VALUES ('The Book Thief', null, null, 'Anniversary Edition with New Context', 2005, 'Alfred A. Knopf, Random House Children''s Books', 'Markus Zusak', null, 'Fiction, Historical Fiction, World War II Novel', 1)");
-
-         */
 
     }
 
@@ -217,15 +198,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Create query to check if username and password exist as a key-value pair in log-in data table
             cursor = db.query(
                     TABLE_LOGIN,
-                    new String[]{"_id"},
-                    COL_USERNAME + " = ? AND " + COL_PASSWORD + " = ?",
-                    new String[]{username, password},
+                    new String[]{COL_PASSWORD_HASH, COL_SALT},
+                    COL_USERNAME + " = ?",
+                    new String[]{username},
                     null,
                     null,
                     null
             );
 
-            return cursor.getCount() > 0;
+            // if no account with specified username
+            if(!cursor.moveToFirst()) {
+                return false;
+            }
+
+            // fetch hash and salt
+            String pwhash = cursor.getString(cursor.getColumnIndexOrThrow(COL_PASSWORD_HASH));
+            String salt = cursor.getString(cursor.getColumnIndexOrThrow(COL_SALT));
+
+            // verify encrypted password
+            return PasswordHasher.verify(password, salt, pwhash);
 
         } catch (SQLiteException e) {
 
@@ -496,5 +487,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+
+    // Insert new user into database
+    private boolean insertUser(SQLiteDatabase db, String username, String password) {
+
+        // generate encrypted version of password
+        String salt = PasswordHasher.generateSalt();
+        String hash = PasswordHasher.hash(password, salt);
+
+        // if hashing password failed...
+        if (hash == null) {
+
+            // log an error and return
+            Log.e("DatabaseHelper", "Could not encrypt password for the username " + username);
+            return false;
+
+        }
+
+        // package values
+        ContentValues values = new ContentValues();
+        values.put(COL_USERNAME, username);
+        values.put(COL_PASSWORD_HASH, hash);
+        values.put(COL_SALT, salt);
+
+        // attempt insert, if insert fails return -1
+        long insertRow = db.insert(TABLE_LOGIN, null, values);
+        return insertRow != -1;
+
+    }
+
+    // register new user
+    public boolean registerUser(String username, String password) {
+
+        // check if either field entered is empty
+        if (username == null || password == null) {
+
+            // log an error
+            Log.e("DatabaseHelper", "Username or password was null.");
+            return false;
+
+        }
+
+        // catch errors inserting into database
+        try {
+
+            // fetch database and add to it
+            SQLiteDatabase db = this.getWritableDatabase();
+            return insertUser(db, username, password);
+
+        } catch (SQLiteException e) {
+
+            // log error generated
+            Log.e("DatabaseHelper", "User registration failed." + e.getMessage());
+            return false;
+
+        }
+
+    }
+
+
 
 }

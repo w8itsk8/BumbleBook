@@ -1,4 +1,7 @@
 package com.example.bumblebook;
+// created by Kate Wheeler 4 Oct 2026
+// BumbleBook Book Inventory Application
+// GenreSelection defines the genre-picking checklist for the Add/Edit screen
 
 
 

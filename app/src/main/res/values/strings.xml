@@ -47,4 +47,8 @@
     <string name="pickerFrag_header">Select Genres</string>
     <string name="pickerFrag_button">Done</string>
 
+    <!-- New User Activity -->
+    <string name="createButton">Create Account</string>
+    <string name="confirm_password_label">Confirm Password:</string>
+
 </resources>

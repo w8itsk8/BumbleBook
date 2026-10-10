@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- created by Kate Wheeler 9 Oct 2026 -->
+<!-- BumbleBook Book Inventory Application -->
+<!-- activity_newuser defines layout of new user screen -->
+
+<!-- Add scrollview to ensure content is scrollable when scrunched up by the keyboard -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FFD966">
+
+    <!-- orient layout vertically -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Display logo -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/logo_desc"
+            android:scaleType="centerInside" />
+
+        <!-- center text fields in space under logo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <!-- username label -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username_label_text"
+                android:textSize="25sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:textColor="#000000"
+                android:labelFor="@+id/etNewUsername" />
+
+            <!-- field for user to enter new username -->
+            <EditText
+                android:id="@+id/etNewUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="75dp"
+                android:autofillHints="newUsername"
+                android:background="#FFFFFF"
+                android:inputType="text" />
+
+            <!-- password label -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password_label_text"
+                android:textSize="25sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:textColor="#000000"
+                android:labelFor="@id/etNewPassword" />
+
+            <!-- first password entry field -->
+            <EditText
+                android:id="@+id/etNewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="75dp"
+                android:autofillHints="newPassword"
+                android:background="#FFFFFF"
+                android:inputType="textPassword" />
+
+            <!-- confirm password field label -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_password_label"
+                android:textSize="25sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:textColor="#000000"
+                android:labelFor="@+id/etConfirmPassword" />
+
+            <!-- confirm password field -->
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="75dp"
+                android:autofillHints="newPassword"
+                android:background="#FFFFFF"
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+        <!-- Create account button -->
+        <Button
+            android:id="@+id/createButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="@string/createButton"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginEnd="75dp"
+            android:backgroundTint="#000000"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+</ScrollView>

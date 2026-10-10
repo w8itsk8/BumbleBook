@@ -38,6 +38,12 @@
 
         </activity>
 
+        <activity
+            android:name=".NewUserActivity"
+            android:exported="false" >
+
+        </activity>
+
     </application>
 
 </manifest>

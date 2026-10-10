@@ -18,6 +18,7 @@ public class LogInActivity extends AppCompatActivity {
     // Initialize class-level variables
     DatabaseHelper db;
     Button login;
+    Button createAccount;
     EditText userUN;
     EditText userPW;
 
@@ -54,6 +55,17 @@ public class LogInActivity extends AppCompatActivity {
         if (userPW == null) {
             Log.e("LogInActivity", "Password was null");
             return;
+        }
+
+        createAccount = findViewById(R.id.button2);
+
+        // make sure the button isn't null
+        if (createAccount == null) {
+
+            // Log error
+            Log.e("LogInActivity", "Create account button was null");
+            return;
+
         }
 
         // When the button is pressed...
@@ -100,6 +112,15 @@ public class LogInActivity extends AppCompatActivity {
             }
 
         });
+
+        // listen for create account button press
+        createAccount.setOnClickListener((view -> {
+
+            // open new user activity
+            Intent intent = new Intent(LogInActivity.this, NewUserActivity.class);
+            startActivity(intent);
+
+        }));
 
     }
 
